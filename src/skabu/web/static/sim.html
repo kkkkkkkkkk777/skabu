@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>skabu シミュ</title>
+  <link rel="stylesheet" href="/static/style.css?v=versionsave1">
+  <script src="https://unpkg.com/lightweight-charts@4.2.3/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+<body class="page-rank page-sim">
+  <header class="top">
+    <a class="brand" href="/home">skabu</a>
+    <nav class="nav">
+      <a href="/sim" aria-current="page">シミュ</a>
+      <a href="/strategy">戦略</a>
+      <a href="/rank">ランキング</a>
+      <a href="/daily">日次</a>
+      <a href="/trade">売買</a>
+      <a href="/verify">検証</a>
+      <a href="/model">モデル</a>
+      <a href="/">チャート</a>
+      <a href="/help">ヘルプ</a>
+    </nav>
+    <div class="rank-controls">
+      <button type="button" id="source-active" class="ghost active">本番</button>
+      <button type="button" id="source-checks" class="ghost">実験</button>
+      <label>版
+        <select id="experiment">
+          <option value="">—</option>
+        </select>
+      </label>
+      <button type="button" id="sim-mode-month" class="ghost active">1か月</button>
+      <button type="button" id="sim-mode-long" class="ghost">長期</button>
+      <label id="as-of-wrap">予測日
+        <input id="as-of" type="date">
+      </label>
+      <label id="start-wrap" hidden>開始
+        <input id="sim-start" type="date">
+      </label>
+      <label id="end-wrap" hidden>終了
+        <input id="sim-end" type="date">
+      </label>
+      <label>資金
+        <input id="cash" type="number" value="1000000" min="10000" step="10000">
+      </label>
+      <label>銘柄数
+        <input id="top" type="number" value="5" min="1" max="20">
+      </label>
+      <label>リスク%
+        <input id="risk-pct" type="number" value="1" min="0.1" max="20" step="0.1">
+      </label>
+      <label>利確しない
+        <input id="no-target" type="checkbox">
+      </label>
+      <label id="hold-wrap" hidden>保有日数
+        <input id="hold-days" type="number" value="20" min="1" max="250" step="1">
+      </label>
+      <button type="button" id="run">実行</button>
+      <label>名前
+        <input id="save-title" type="text" maxlength="80" placeholder="保存名">
+      </label>
+      <button type="button" id="save-result">この結果を保存</button>
+    </div>
+  </header>
+  <aside class="ind-dock" aria-label="点数と門">
+    <div id="ind-bar"></div>
+    <div id="gate-bar"></div>
+  </aside>
+  <p id="ind-mode-note" class="ind-mode-note">採用戦略を使っています。点と門は実験に切り替えると使います。</p>
+  <p id="version-save" class="ind-mode-note version-save" hidden>
+    <label>版の名前
+      <input id="version-title" type="text" maxlength="80" placeholder="版の名前">
+    </label>
+    <button type="button" id="save-version">版として保存</button>
+    <span id="version-save-note"></span>
+  </p>
+  <section id="save-bar" class="sim-save-bar" aria-label="保存したシミュ">
+    <label>保存済み
+      <select id="save-list">
+        <option value="">—</option>
+      </select>
+    </label>
+    <button type="button" id="save-open" class="ghost">開く</button>
+    <button type="button" id="save-delete" class="ghost">削除</button>
+    <label>比べる相手
+      <select id="save-compare">
+        <option value="">—</option>
+      </select>
+    </label>
+    <button type="button" id="save-compare-btn" class="ghost">比べる</button>
+  </section>
+  <section id="save-compare-box" class="rank-wrap sim-compare-box" hidden>
+    <h2>保存の比較</h2>
+    <table class="rank" id="save-compare-table"></table>
+  </section>
+  <section class="meta">
+    <div id="summary">最新足から約20営業日前の数字だけで買い、残高の動きを見ます。</div>
+    <div id="range"></div>
+  </section>
+  <div id="warn" class="warn" hidden></div>
+  <div id="error" class="error" hidden></div>
+  <section id="cards" class="metric-cards"></section>
+  <div class="sim-split">
+    <div id="sim-chart"></div>
+    <div class="sim-split-bar" id="sim-split-bar" role="separator" aria-orientation="horizontal" aria-label="チャートと表の境を動かす"></div>
+    <main class="rank-wrap">
+    <h2>銘柄</h2>
+    <table class="rank">
+      <thead>
+        <tr>
+          <th>順位</th>
+          <th>コード</th>
+          <th>銘柄</th>
+          <th>業種</th>
+          <th>買日</th>
+          <th>売日</th>
+          <th>金額</th>
+          <th>株数</th>
+          <th>買値</th>
+          <th>決済</th>
+          <th>理由</th>
+          <th>損益</th>
+        </tr>
+      </thead>
+      <tbody id="rows">
+        <tr><td colspan="7">実行すると表示します</td></tr>
+      </tbody>
+    </table>
+    <h2>日次残高</h2>
+    <table class="rank">
+      <thead>
+        <tr>
+          <th>日付</th>
+          <th>残高</th>
+          <th>現金</th>
+          <th>評価</th>
+          <th>TOPIX同額</th>
+        </tr>
+      </thead>
+      <tbody id="curve-rows">
+        <tr><td colspan="5">実行すると表示します</td></tr>
+      </tbody>
+    </table>
+    </main>
+  </div>
+  <footer>
+    <span id="status">ローカルDBだけを読みます</span>
+    <span class="foot-actions">
+      <button type="button" id="manual-sync">株価を同期</button>
+      <span id="debug"></span>
+    </span>
+  </footer>
+  <script src="/static/syncbtn.js?v=manualsync1"></script>
+  <script src="/static/indprefs.js"></script>
+  <script src="/static/indpanel.js?v=indgroup1"></script>
+  <script src="/static/sim.js?v=savetitle1"></script>
+</body>
+</html>

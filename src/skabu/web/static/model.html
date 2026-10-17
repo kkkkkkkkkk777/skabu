@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>skabu 学習モデル</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="page-rank">
+  <header class="top">
+    <a class="brand" href="/home">skabu</a>
+    <nav class="nav">
+      <a href="/sim">シミュ</a>
+      <a href="/strategy">戦略</a>
+      <a href="/rank">ランキング</a>
+      <a href="/daily">日次</a>
+      <a href="/trade">売買</a>
+      <a href="/verify">検証</a>
+      <a href="/model" aria-current="page">モデル</a>
+      <a href="/">チャート</a>
+      <a href="/help">ヘルプ</a>
+    </nav>
+    <div class="rank-controls">
+      <a class="ghost-link" href="/rank?ind=ema,rsi">ランキングで使う</a>
+    </div>
+  </header>
+  <section class="meta">
+    <div id="summary">上限20営業日以内に目標へ先に届くかを、過去の確定足だけで学習します。</div>
+    <div id="range"></div>
+  </section>
+  <div id="warn" class="warn" hidden></div>
+  <div id="error" class="error" hidden></div>
+  <section id="cards" class="metric-cards"></section>
+  <main class="rank-wrap">
+    <h2>当てる対象の比較</h2>
+    <p id="label-note" class="ind-mode-note">未比較。`python -m skabu labels` でリターン&gt;0 と指数勝ちを測る。本番 Boost は入れ替えない。</p>
+    <table class="rank">
+      <thead>
+        <tr>
+          <th>名前</th>
+          <th>正解</th>
+          <th>正例率</th>
+          <th>学習</th>
+          <th>検証</th>
+          <th>AUC</th>
+          <th>精度</th>
+          <th>cut</th>
+          <th>判定</th>
+        </tr>
+      </thead>
+      <tbody id="label-rows">
+        <tr><td colspan="9">未比較</td></tr>
+      </tbody>
+    </table>
+    <h2>運用しながら学習</h2>
+    <table class="rank">
+      <thead>
+        <tr><th>項目</th><th>値</th></tr>
+      </thead>
+      <tbody id="learn-rows">
+        <tr><td colspan="2">読み込み中…</td></tr>
+      </tbody>
+    </table>
+    <h2>予測確率と実現（校正）</h2>
+    <table class="rank">
+      <thead>
+        <tr><th>帯</th><th>件数</th><th>平均予測</th><th>実現（目標到達）</th></tr>
+      </thead>
+      <tbody id="cal-rows">
+        <tr><td colspan="4">読み込み中…</td></tr>
+      </tbody>
+    </table>
+    <h2>採点済み上位の超過</h2>
+    <table class="rank">
+      <thead>
+        <tr><th>予測日</th><th>件数</th><th>平均超過</th><th>目標到達率</th></tr>
+      </thead>
+      <tbody id="roll-rows">
+        <tr><td colspan="4">読み込み中…</td></tr>
+      </tbody>
+    </table>
+    <h2>学習履歴</h2>
+    <table class="rank">
+      <thead>
+        <tr><th>ID</th><th>状態</th><th>AUC</th><th>理由</th></tr>
+      </thead>
+      <tbody id="hist-rows">
+        <tr><td colspan="4">読み込み中…</td></tr>
+      </tbody>
+    </table>
+    <h2>特徴量の差（当たった銘柄 − 外れた銘柄）</h2>
+    <table class="rank">
+      <thead>
+        <tr><th>特徴量</th><th>差</th></tr>
+      </thead>
+      <tbody id="rows">
+        <tr><td colspan="2">読み込み中…</td></tr>
+      </tbody>
+    </table>
+  </main>
+  <footer>
+    <span id="status">日次のあと自動で採点します。再学習は条件を満たしたときだけです。</span>
+    <span class="foot-actions">
+      <button type="button" id="manual-sync">株価を同期</button>
+      <span id="debug"></span>
+    </span>
+  </footer>
+  <script src="/static/syncbtn.js?v=manualsync1"></script>
+  <script src="/static/model.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>skabu チャート</title>
+  <link rel="stylesheet" href="/static/style.css?v=draw5">
+  <script src="https://unpkg.com/lightweight-charts@4.2.3/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+<body class="page-chart">
+  <header class="top">
+    <a class="brand" href="/home">skabu</a>
+    <nav class="nav">
+      <a href="/sim">シミュ</a>
+      <a href="/strategy">戦略</a>
+      <a href="/rank">ランキング</a>
+      <a href="/daily">日次</a>
+      <a href="/trade">売買</a>
+      <a href="/verify">検証</a>
+      <a href="/model">モデル</a>
+      <a href="/" aria-current="page">チャート</a>
+      <a href="/help">ヘルプ</a>
+    </nav>
+    <div class="search-wrap">
+      <input id="search" type="search" placeholder="銘柄コードまたは社名（例: 8697 / トヨタ）" autocomplete="off">
+      <ul id="results" class="results" hidden></ul>
+    </div>
+    <div class="tf" role="group" aria-label="時間足">
+      <button type="button" data-tf="daily" class="active">日足</button>
+      <button type="button" data-tf="weekly">週足</button>
+    </div>
+  </header>
+  <section class="meta">
+    <div class="issue-line">
+      <div id="issue">銘柄を検索してください</div>
+      <nav id="ext-charts" class="ext-charts" hidden aria-label="公開チャート"></nav>
+    </div>
+    <div id="range"></div>
+  </section>
+  <div id="error" class="error" hidden></div>
+  <aside class="ind-dock" aria-label="インジケータ">
+    <div id="ind-bar"></div>
+    <button type="button" id="draw-toggle" class="ind-pop-btn" aria-expanded="false" aria-controls="draw-tools">描画</button>
+    <div id="ref-pop"></div>
+  </aside>
+  <div class="charts">
+    <div class="chart-host">
+      <div class="draw-tools" id="draw-tools" role="toolbar" aria-label="描画" hidden>
+        <button type="button" data-tool="hand" class="active" title="チャートを動かす">移動</button>
+        <button type="button" data-tool="select" title="線や箱を選んで動かす">選択</button>
+        <button type="button" data-tool="trend" title="2点の線">線</button>
+        <button type="button" data-tool="hline" title="価格の水平線">水平</button>
+        <button type="button" data-tool="vline" title="日付の垂直線">垂直</button>
+        <button type="button" data-tool="box" title="対角の2点">箱</button>
+        <button type="button" id="draw-extend" title="右へ延長" hidden>延長</button>
+        <label class="draw-snap" title="足の四本値へ吸着"><input type="checkbox" id="draw-snap">吸着</label>
+        <div class="draw-colors" id="draw-colors" role="group" aria-label="色"></div>
+      </div>
+      <canvas id="draw-layer" class="draw-layer" aria-hidden="true"></canvas>
+      <main id="chart"></main>
+      <div id="sim-span" class="sim-span" hidden>
+        <span class="sim-span-label">シミュ</span>
+      </div>
+    </div>
+    <div id="osc" hidden></div>
+  </div>
+  <section class="meta features">
+    <div id="features"></div>
+  </section>
+  <footer>
+    <span id="status">DB を読み込み中…</span>
+    <span class="foot-actions">
+      <button type="button" id="manual-sync">株価を同期</button>
+      <span id="debug"></span>
+    </span>
+  </footer>
+  <script src="/static/syncbtn.js?v=manualsync1"></script>
+  <script src="/static/indprefs.js"></script>
+  <script src="/static/indpanel.js?v=indgroup1"></script>
+  <script src="/static/draw.js?v=draw5"></script>
+  <script src="/static/app.js?v=gap2"></script>
+</body>
+</html>

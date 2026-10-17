@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>skabu 戦略</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="page-rank">
+  <header class="top">
+    <a class="brand" href="/home">skabu</a>
+    <nav class="nav">
+      <a href="/sim">シミュ</a>
+      <a href="/strategy" aria-current="page">戦略</a>
+      <a href="/rank">ランキング</a>
+      <a href="/daily">日次</a>
+      <a href="/trade">売買</a>
+      <a href="/verify">検証</a>
+      <a href="/model">モデル</a>
+      <a href="/">チャート</a>
+      <a href="/help">ヘルプ</a>
+    </nav>
+    <div class="rank-controls">
+      <a class="ghost-link" href="/rank">ランキングへ</a>
+      <button type="button" id="search">自動探索</button>
+    </div>
+  </header>
+  <section class="meta">
+    <div id="summary">単体のあと、上位を組み合わせます。初回は十数分かかることがあります。</div>
+    <div id="range"></div>
+    <p class="ind-mode-note">点と門をまず単体で試し、効いた上位を最大3つまで重ねます。選定で一番でも、確認で有意になるまで採用しない。生口座はオンにしない。</p>
+  </section>
+  <div id="warn" class="warn" hidden></div>
+  <div id="error" class="error" hidden></div>
+  <section id="cards" class="metric-cards"></section>
+  <main class="rank-wrap">
+    <h2>作戦の版</h2>
+    <table class="rank">
+      <thead>
+        <tr>
+          <th>名前</th>
+          <th>条件</th>
+          <th>確認リターン</th>
+          <th>確認超過</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="versions">
+        <tr><td colspan="5">読み込み中…</td></tr>
+      </tbody>
+    </table>
+    <h2>自動探索（選定 / 確認）</h2>
+    <table class="rank">
+      <thead>
+        <tr>
+          <th>戦略</th>
+          <th>選定リターン</th>
+          <th>確認リターン</th>
+          <th>n / 必要</th>
+          <th>p</th>
+        </tr>
+      </thead>
+      <tbody id="search-rows">
+        <tr><td colspan="5">自動探索を実行すると出ます</td></tr>
+      </tbody>
+    </table>
+    <h2>候補の比較（20日・選定期間 / 確認期間）</h2>
+    <table class="rank">
+      <thead>
+        <tr>
+          <th>戦略</th>
+          <th>選定超過</th>
+          <th>選定勝率</th>
+          <th>確認超過</th>
+          <th>確認勝率</th>
+        </tr>
+      </thead>
+      <tbody id="rows">
+        <tr><td colspan="5">読み込み中…</td></tr>
+      </tbody>
+    </table>
+  </main>
+  <footer>
+    <span id="status">版の採用は表のボタンか `python -m skabu use v1`。全体の再選定は `python -m skabu adopt`。</span>
+    <span class="foot-actions">
+      <button type="button" id="manual-sync">株価を同期</button>
+      <span id="debug"></span>
+    </span>
+  </footer>
+  <script src="/static/syncbtn.js?v=manualsync1"></script>
+  <script src="/static/strategy.js?v=noholdout1"></script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>skabu ランキング</title>
+  <link rel="stylesheet" href="/static/style.css?v=versionsave1">
+</head>
+<body class="page-rank">
+  <header class="top">
+    <a class="brand" href="/home">skabu</a>
+    <nav class="nav">
+      <a href="/sim">シミュ</a>
+      <a href="/strategy">戦略</a>
+      <a href="/rank" aria-current="page">ランキング</a>
+      <a href="/daily">日次</a>
+      <a href="/trade">売買</a>
+      <a href="/verify">検証</a>
+      <a href="/model">モデル</a>
+      <a href="/">チャート</a>
+      <a href="/help">ヘルプ</a>
+    </nav>
+    <div class="rank-controls">
+      <label>市場
+        <select id="market">
+          <option value="プライム" selected>プライム</option>
+          <option value="スタンダード">スタンダード</option>
+          <option value="グロース">グロース</option>
+          <option value="all">すべて</option>
+        </select>
+      </label>
+      <label>最低出来高
+        <input id="minvol" type="number" value="50000" min="0" step="1000">
+      </label>
+      <label>上位
+        <input id="top" type="number" value="50" min="1" max="500">
+      </label>
+      <label>損切の倍率
+        <input id="stop-mult" type="number" value="1.5" min="0.1" max="10" step="0.1">
+      </label>
+      <label>目標の倍率
+        <input id="target-mult" type="number" value="3" min="0.1" max="10" step="0.1">
+      </label>
+      <button type="button" id="run">再計算</button>
+      <button type="button" id="adopted">採用で見る</button>
+    </div>
+  </header>
+  <aside class="ind-dock" aria-label="点数と門">
+    <div id="ind-bar"></div>
+    <div id="gate-bar"></div>
+  </aside>
+  <p id="version-save" class="ind-mode-note version-save">
+    <label>版の名前
+      <input id="version-title" type="text" maxlength="80" placeholder="版の名前">
+    </label>
+    <button type="button" id="save-version">版として保存</button>
+    <span id="version-save-note"></span>
+  </p>
+  <section class="meta">
+    <div id="summary">計算前です</div>
+    <div id="range"></div>
+  </section>
+  <div id="error" class="error" hidden></div>
+  <main class="rank-wrap">
+    <table class="rank">
+      <thead>
+        <tr id="rank-heads">
+          <th>順位</th>
+          <th>コード</th>
+          <th>銘柄</th>
+          <th>市場</th>
+          <th>業種</th>
+          <th>終値</th>
+          <th>総合</th>
+          <th>損切</th>
+          <th>目標</th>
+          <th>RR</th>
+          <th>購入</th>
+          <th>根拠</th>
+        </tr>
+      </thead>
+      <tbody id="rows">
+        <tr><td colspan="8">読み込み中…</td></tr>
+      </tbody>
+    </table>
+  </main>
+  <footer>
+    <span id="status">DB を読み込み中…</span>
+    <span class="foot-actions">
+      <button type="button" id="manual-sync">株価を同期</button>
+      <span id="debug"></span>
+    </span>
+  </footer>
+  <script src="/static/syncbtn.js?v=manualsync1"></script>
+  <script src="/static/indprefs.js"></script>
+  <script src="/static/indpanel.js?v=indgroup1"></script>
+  <script src="/static/rank.js?v=charttab1"></script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>skabu</title>
+  <link rel="stylesheet" href="/static/style.css?v=home2">
+</head>
+<body class="page-rank page-home">
+  <header class="top">
+    <a class="brand" href="/home">skabu</a>
+    <nav class="nav">
+      <a href="/sim">シミュ</a>
+      <a href="/strategy">戦略</a>
+      <a href="/rank">ランキング</a>
+      <a href="/daily">日次</a>
+      <a href="/trade">売買</a>
+      <a href="/verify">検証</a>
+      <a href="/model">モデル</a>
+      <a href="/">チャート</a>
+      <a href="/help">ヘルプ</a>
+    </nav>
+  </header>
+  <main class="home">
+    <p class="home-lead">上から順に進めると、シミュでやり方を試し、採用して、今日の候補を買います。気になった銘柄は、最後にチャートで見ます。</p>
+    <div class="home-grid">
+      <a class="home-card" href="/sim">
+        <span class="home-step">1</span>
+        <span class="home-body">
+          <span class="home-title">シミュ</span>
+          <span class="home-text">点と門を変えて、過去の残高を試します。利確せず、日数で売る試し方もここです。</span>
+          <span class="home-next">開くと、1か月か長期を選んで実行できます。</span>
+        </span>
+      </a>
+      <a class="home-card" href="/strategy">
+        <span class="home-step">2</span>
+        <span class="home-body">
+          <span class="home-title">戦略</span>
+          <span class="home-text">良かったやり方を採用します。日次と売買は、このルールを使います。</span>
+          <span class="home-next">開くと、いま採用中の戦略と、試した版の一覧が出ます。</span>
+        </span>
+      </a>
+      <a class="home-card" href="/rank">
+        <span class="home-step">3</span>
+        <span class="home-body">
+          <span class="home-title">ランキング</span>
+          <span class="home-text">その条件で、今日の銘柄を点数の高い順に見ます。「買う」は、条件を通った銘柄です。</span>
+          <span class="home-next">開くと、点と門を付けた順位表が出ます。銘柄は別のチャートタブで開きます。</span>
+        </span>
+      </a>
+      <a class="home-card" href="/daily">
+        <span class="home-step">4</span>
+        <span class="home-body">
+          <span class="home-title">日次</span>
+          <span class="home-text">採用した戦略で、次に買う銘柄と株数を見ます。</span>
+          <span class="home-next">開くと、最後に出した日次の買う一覧が出ます。銘柄は別のチャートタブで開きます。</span>
+        </span>
+      </a>
+      <a class="home-card" href="/trade">
+        <span class="home-step">5</span>
+        <span class="home-body">
+          <span class="home-title">売買</span>
+          <span class="home-text">日次の銘柄を承認して買います。損切は逆指値、期限の日は引けで売ります。</span>
+          <span class="home-next">開くと、買う待ちの行と、売る日が付いた保有が出ます。銘柄は別のチャートタブで開きます。</span>
+        </span>
+      </a>
+      <a class="home-card" href="/verify">
+        <span class="home-step">6</span>
+        <span class="home-body">
+          <span class="home-title">検証</span>
+          <span class="home-text">その日の予測を残し、あとから当たったかを見ます。売買の前に済ませる必要はありません。</span>
+          <span class="home-next">開くと、ロックした予測の成績が出ます。銘柄は別のチャートタブで開きます。</span>
+        </span>
+      </a>
+      <a class="home-card" href="/model">
+        <span class="home-step">7</span>
+        <span class="home-body">
+          <span class="home-title">モデル</span>
+          <span class="home-text">目標に先に届く確率の学習結果を見ます。売買の前に済ませる必要はありません。</span>
+          <span class="home-next">開くと、学習したモデルの数字が出ます。</span>
+        </span>
+      </a>
+      <a class="home-card" href="/">
+        <span class="home-step">8</span>
+        <span class="home-body">
+          <span class="home-title">チャート</span>
+          <span class="home-text">気になった銘柄の日足と週足、付けた点の形を見ます。</span>
+          <span class="home-next">開くと、銘柄を検索してローソク足が出ます。</span>
+        </span>
+      </a>
+    </div>
+  </main>
+  <footer>
+    <span id="status">左上の skabu から、この案内に戻れます。</span>
+    <span class="foot-actions">
+      <button type="button" id="manual-sync">株価を同期</button>
+      <span id="debug"></span>
+    </span>
+  </footer>
+  <script src="/static/syncbtn.js?v=manualsync1"></script>
+</body>
+</html>

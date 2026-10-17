@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>skabu 売買</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="page-rank">
+  <header class="top">
+    <a class="brand" href="/home">skabu</a>
+    <nav class="nav">
+      <a href="/sim">シミュ</a>
+      <a href="/strategy">戦略</a>
+      <a href="/rank">ランキング</a>
+      <a href="/daily">日次</a>
+      <a href="/trade" aria-current="page">売買</a>
+      <a href="/verify">検証</a>
+      <a href="/model">モデル</a>
+      <a href="/">チャート</a>
+      <a href="/help">ヘルプ</a>
+    </nav>
+    <div class="rank-controls">
+      <span id="env-badge" class="badge badge-paper">ペーパー</span>
+      <button type="button" id="mode-approve" class="ghost">承認</button>
+      <button type="button" id="mode-auto" class="ghost">自動</button>
+      <label class="hold-label" for="hold-days">保有日数</label>
+      <input id="hold-days" type="number" min="1" max="250" value="20">
+      <button type="button" id="buy">候補を台帳へ</button>
+      <button type="button" id="approve">選択を承認</button>
+      <button type="button" id="close-sell">引けで売る</button>
+      <button type="button" id="watch" class="ghost">監視更新</button>
+      <button type="button" id="halt" class="danger">緊急停止</button>
+      <button type="button" id="resume" class="ghost">再開</button>
+    </div>
+  </header>
+  <section class="meta">
+    <div id="summary">日次候補を承認して買います。目標の指値は出さず、保有日数の引けで売ります。売る日が今日の行を選んで「引けで売る」を押します。</div>
+    <div id="range"></div>
+  </section>
+  <div id="warn" class="warn" hidden></div>
+  <div id="error" class="error" hidden></div>
+  <section id="cards" class="metric-cards"></section>
+  <main class="rank-wrap">
+    <table class="rank">
+      <thead>
+        <tr>
+          <th><input id="check-all" type="checkbox" aria-label="すべて選択"></th>
+          <th>コード</th>
+          <th>銘柄</th>
+          <th>業種</th>
+          <th>株数</th>
+          <th>金額</th>
+          <th>状態</th>
+          <th>見送り</th>
+          <th>買</th>
+          <th>売る日</th>
+          <th>損切</th>
+          <th>約定</th>
+        </tr>
+      </thead>
+      <tbody id="rows">
+        <tr><td colspan="12">読み込み中…</td></tr>
+      </tbody>
+    </table>
+    <h2>保有</h2>
+    <table class="rank">
+      <thead>
+        <tr>
+          <th>コード</th>
+          <th>銘柄</th>
+          <th>株数</th>
+          <th>単価</th>
+          <th>評価</th>
+          <th>損益</th>
+        </tr>
+      </thead>
+      <tbody id="positions">
+        <tr><td colspan="6">読み込み中…</td></tr>
+      </tbody>
+    </table>
+  </main>
+  <footer>
+    <span id="status">接続を確認しています…</span>
+    <span class="foot-actions">
+      <button type="button" id="manual-sync">株価を同期</button>
+      <span id="debug"></span>
+    </span>
+  </footer>
+  <script src="/static/syncbtn.js?v=manualsync1"></script>
+  <script src="/static/trade.js?v=charttab1"></script>
+</body>
+</html>

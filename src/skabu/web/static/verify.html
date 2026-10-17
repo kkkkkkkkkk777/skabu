@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>skabu 検証</title>
+  <link rel="stylesheet" href="/static/style.css?v=verifylayout3">
+</head>
+<body class="page-rank page-verify">
+  <header class="top">
+    <a class="brand" href="/home">skabu</a>
+    <nav class="nav">
+      <a href="/sim">シミュ</a>
+      <a href="/strategy">戦略</a>
+      <a href="/rank">ランキング</a>
+      <a href="/daily">日次</a>
+      <a href="/trade">売買</a>
+      <a href="/verify" aria-current="page">検証</a>
+      <a href="/model">モデル</a>
+      <a href="/">チャート</a>
+      <a href="/help">ヘルプ</a>
+    </nav>
+    <div class="rank-controls">
+      <label>版
+        <select id="experiment"></select>
+      </label>
+      <label>上位
+        <input id="top" type="number" value="20" min="1" max="100">
+      </label>
+      <label>予測の間隔
+        <input id="stride" type="number" value="20" min="5" max="60">
+      </label>
+      <label>損切の倍率
+        <input id="stop-mult" type="number" value="1.5" min="0.1" max="10" step="0.1">
+      </label>
+      <label>目標の倍率
+        <input id="target-mult" type="number" value="3" min="0.1" max="10" step="0.1">
+      </label>
+      <div class="tf" role="group" aria-label="売る期限">
+        <span>売る期限</span>
+        <button type="button" data-hz="5">5日</button>
+        <button type="button" data-hz="20" class="active">20日</button>
+      </div>
+      <button type="button" id="run">検証</button>
+      <button type="button" id="save-verify" class="ghost" disabled>この結果を保存</button>
+    </div>
+  </header>
+  <section class="meta">
+    <div id="summary">検証を押すと始まります。予測は日付ごとにロックされ、あとから指標を変えても書き換えません。</div>
+    <div id="range"></div>
+    <p class="ind-mode-note">予測の間隔は、何営業日おきに予測のノートを書くかです。変えたあとは、検証を押し直してください。売る期限は、損切か目標に当たらなかったとき、何営業日で売ったことにするかです。20日が日次と同じ期限です。押し直しても再計算しません。保存する成績は20日のままです。</p>
+    <p class="ind-mode-note" id="experiment-note">版を選ぶと、その点と門で検証します。</p>
+  </section>
+  <div id="error" class="error" hidden></div>
+  <section id="cards" class="metric-cards"></section>
+  <main class="rank-wrap">
+    <table class="rank">
+      <thead>
+        <tr>
+          <th>予測日</th>
+          <th>エントリー</th>
+          <th>決済</th>
+          <th>件数</th>
+          <th>期間リターン</th>
+          <th>ベンチ</th>
+          <th>超過</th>
+        </tr>
+      </thead>
+      <tbody id="rows">
+        <tr><td colspan="7">検証を押すと、選んだ版の成績が出ます。</td></tr>
+      </tbody>
+    </table>
+  </main>
+  <section id="detail" class="rank-wrap" hidden>
+    <h2 id="detail-title">内訳</h2>
+    <table class="rank">
+      <thead>
+        <tr>
+          <th>順位</th><th>コード</th><th>銘柄</th><th>始値</th><th>決済</th><th>理由</th><th>リターン</th><th>超過</th>
+        </tr>
+      </thead>
+      <tbody id="detail-rows"></tbody>
+    </table>
+  </section>
+  <footer>
+    <span id="status">DB を読み込み中…</span>
+    <span class="foot-actions">
+      <button type="button" id="manual-sync">株価を同期</button>
+      <span id="debug"></span>
+    </span>
+  </footer>
+  <script src="/static/syncbtn.js?v=manualsync1"></script>
+  <script src="/static/verify.js?v=charttab1"></script>
+</body>
+</html>
